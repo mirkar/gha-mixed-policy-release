@@ -1,8 +1,19 @@
+# This GitHub Action validates that pull request titles follow the Conventional Commits format.
+# It is triggered on pull requests targeting the main branch when they are opened or edited.
 name: Validate PR Title
+
+# Concurrency settings to prevent multiple validations on the same PR
+# This ensures that if GitHub fires an edited and a synchronize event at 
+# the exact same second for the same PR, the engine will immediately cancel 
+# the first run and only execute the newest one.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 on:
   pull_request:
     branches: [ main ]
-    types: [opened, edited]
+    types: [opened, edited, synchronize, reopened]
 # on:
 #   pull_request:
 #     types: [opened, edited, synchronize]
