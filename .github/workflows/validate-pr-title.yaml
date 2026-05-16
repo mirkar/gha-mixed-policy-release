@@ -1,3 +1,5 @@
+# This GitHub Action validates that pull request titles follow the Conventional Commits format.
+# It is triggered on pull requests targeting the main branch when they are opened or edited.
 name: Validate PR Title
 on:
   pull_request:
