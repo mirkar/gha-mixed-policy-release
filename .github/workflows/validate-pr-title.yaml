@@ -1,10 +1,15 @@
 # This GitHub Action validates that pull request titles follow the Conventional Commits format.
 # It is triggered on pull requests targeting the main branch when they are opened or edited.
 name: Validate PR Title
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 on:
   pull_request:
     branches: [ main ]
-    types: [opened, edited, synchronize, reopened, labeled, unlabeled]
+    types: [opened, edited, synchronize, reopened]
 # on:
 #   pull_request:
 #     types: [opened, edited, synchronize]
