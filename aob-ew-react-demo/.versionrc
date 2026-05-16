@@ -1,0 +1,72 @@
+{
+    "writerOpts": {
+        "reverse": true,
+        "commitsSort": false
+    },
+    "parserOpts": {
+        "headerPattern": "(?:\\(Merged PR \\d+: \\))?([a-zA-Z]+)(?:\\(([\\w$\\.\\-*\\s]*)\\))?\\!?:(.*)",
+        "breakingHeaderPattern": "(?:\\(Merged PR \\d+: \\))?([a-zA-Z]+)(?:\\(([\\w$\\.\\-*\\s]*)\\))?\\!?!:(.*)",
+        "headerCorrespondence": [
+            "type",
+            "scope",
+            "subject"
+        ]
+    },
+    "types": [
+        {
+            "type": "feat",
+            "section": "Features"
+        },
+        {
+            "type": "fix",
+            "section": "Bug Fixes"
+        },
+        {
+            "type": "docs",
+            "section": "Documentation"
+        },
+        {
+            "type": "style",
+            "section": "Styling"
+        },
+        {
+            "type": "refactor",
+            "section": "Refactors"
+        },
+        {
+            "type": "perf",
+            "section": "Performance"
+        },
+        {
+            "type": "test",
+            "section": "Tests"
+        },
+        {
+            "type": "build",
+            "section": "Build System"
+        },
+        {
+            "type": "ci",
+            "section": "CI",
+            "hidden": true
+        },
+        {
+            "type": "chore",
+            "section": "Chore",
+            "hidden": true
+        },
+        {
+            "type": "revert",
+            "section": "Reverts"
+        }
+    ],
+    "scripts": {
+        "postchangelog": "node ./scripts/postchangelog-strip-links.cjs"
+    },
+    "releaseCommitMessageFormat": "chore(release): {{currentTag}} [skip ci]",
+    "commitUrlFormat": "https://github.com/mirkar/github-actions-the-complete-guide/commit/{{hash}}",
+    "linkCompare": false,
+    "linkIssues": false,
+    "issueUrlFormat": "",
+    "compareUrlFormat": ""
+}
