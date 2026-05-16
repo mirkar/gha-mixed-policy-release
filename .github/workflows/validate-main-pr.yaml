@@ -1,0 +1,79 @@
+name: Validate PRs targeting main
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited, labeled, unlabeled]
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate-main-pr:
+    name: validate-main-pr
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate mixed PR policy
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          PR_LABELS_JSON: ${{ toJson(github.event.pull_request.labels.*.name) }}
+        run: |
+          echo "Validating PR targeting main..."
+          echo "Title: $PR_TITLE"
+          echo "Head branch: $PR_HEAD_REF"
+          echo "Labels: $PR_LABELS_JSON"
+
+          IS_RELEASE_BRANCH=0
+          IS_RELEASE_TITLE=0
+          HAS_RELEASE_LABEL=0
+
+          if [[ "$PR_HEAD_REF" =~ ^release/v[0-9]+\.[0-9]+\.[0-9]+([-.][0-9A-Za-z.-]+)?$ ]]; then
+            IS_RELEASE_BRANCH=1
+          fi
+
+          if [[ "$PR_TITLE" =~ ^chore\(release\):\ v[0-9]+\.[0-9]+\.[0-9]+([-.][0-9A-Za-z.-]+)?$ ]]; then
+            IS_RELEASE_TITLE=1
+          fi
+
+          echo "$PR_LABELS_JSON" | grep -q '"release"' && HAS_RELEASE_LABEL=1 || true
+
+          echo "IS_RELEASE_BRANCH=$IS_RELEASE_BRANCH"
+          echo "IS_RELEASE_TITLE=$IS_RELEASE_TITLE"
+          echo "HAS_RELEASE_LABEL=$HAS_RELEASE_LABEL"
+
+          RELEASE_SIGNAL_COUNT=$((IS_RELEASE_BRANCH + IS_RELEASE_TITLE + HAS_RELEASE_LABEL))
+
+          if [[ "$RELEASE_SIGNAL_COUNT" -eq 0 ]]; then
+            echo "Normal PR detected. Validation passed."
+            exit 0
+          fi
+
+          echo "Release-like PR detected. Enforcing full release policy..."
+
+          FAIL=0
+
+          if [[ "$IS_RELEASE_BRANCH" -ne 1 ]]; then
+            echo "::error title=Invalid release branch::Release PR head branch must match release/vX.Y.Z"
+            FAIL=1
+          fi
+
+          if [[ "$IS_RELEASE_TITLE" -ne 1 ]]; then
+            echo "::error title=Invalid release title::Release PR title must match 'chore(release): vX.Y.Z'"
+            FAIL=1
+          fi
+
+          if [[ "$HAS_RELEASE_LABEL" -ne 1 ]]; then
+            echo "::error title=Missing release label::Release PR must include the 'release' label"
+            FAIL=1
+          fi
+
+          if [[ "$FAIL" -ne 0 ]]; then
+            echo "PR contains release markers but does not satisfy full release policy."
+            exit 1
+          fi
+
+          echo "Valid release PR detected. Validation passed."
