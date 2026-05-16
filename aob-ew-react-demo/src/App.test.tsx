@@ -8,7 +8,7 @@ import App from './App';
 describe('App', () => {
   it('renders Vite + React heading', () => {
     render(<App />);
-    expect(screen.getByText(/First release testBS/i)).toBeInTheDocument();
+    expect(screen.getByText(/First release test/i)).toBeInTheDocument();
   });
 
   it('renders the count button and increments on click', () => {
