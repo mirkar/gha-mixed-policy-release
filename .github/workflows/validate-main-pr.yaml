@@ -48,7 +48,7 @@ jobs:
           RELEASE_SIGNAL_COUNT=$((IS_RELEASE_BRANCH + IS_RELEASE_TITLE + HAS_RELEASE_LABEL))
 
           if [[ "$RELEASE_SIGNAL_COUNT" -eq 0 ]]; then
-            echo "Normal PR detected. Validation passed."
+            echo -e "\033[1;32mNormal PR detected. Validation passed.\033[0m"
             exit 0
           fi
 
