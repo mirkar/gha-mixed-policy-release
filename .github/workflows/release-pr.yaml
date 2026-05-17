@@ -160,11 +160,18 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          LABEL_ARGS=()
+          if gh label list --limit 200 --json name --jq '.[].name' | grep -Fxq "release"; then
+            LABEL_ARGS+=(--label release)
+          else
+            echo "Label 'release' not found. Creating PR without label."
+          fi
+
           gh pr create \
             --base main \
             --head "${{ steps.bump.outputs.branch }}" \
             --title "${{ steps.bump.outputs.title }}" \
-            --label "release" \
+            "${LABEL_ARGS[@]}" \
             --body "$(cat <<EOF
           This PR prepares release **v${{ steps.bump.outputs.version }}**.
 
