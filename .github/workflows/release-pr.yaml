@@ -149,14 +149,17 @@ jobs:
           exit 1
 
       - name: Create release branch
+        if: ${{ inputs.dry_run == false && steps.branch_exists.outputs.exists == 'false' }}
         run: |
           git checkout -b "${{ steps.bump.outputs.branch }}"
 
       - name: Push release branch
+        if: ${{ inputs.dry_run == false && steps.branch_exists.outputs.exists == 'false' }}
         run: |
           git push --set-upstream origin "${{ steps.bump.outputs.branch }}"
 
       - name: Create release PR
+        if: ${{ inputs.dry_run == false && steps.branch_exists.outputs.exists == 'false' }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
