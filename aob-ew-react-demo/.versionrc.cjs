@@ -1,8 +1,12 @@
+const { link } = require("node:fs");
+
 module.exports = {
   writerOpts: {
     reverse: true,
     commitsSort: false,
     linkReferences: false,
+    linkCompare: false,
+    linkIssueUrlFormat: '',
     // transform: (commit) => {
     //   const cloned = { ...commit }
 
@@ -75,5 +79,4 @@ module.exports = {
     }
   ],
   commitUrlFormat: '{{host}}/{{owner}}/{{repository}}/commit/{{hash}}',
-  issueUrlFormat: ''
 }
