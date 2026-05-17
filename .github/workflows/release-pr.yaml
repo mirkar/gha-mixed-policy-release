@@ -146,4 +146,12 @@ jobs:
         run: |
           echo "Release branch already exists: ${{ steps.bump.outputs.branch }}"
           echo "Delete it or merge the related PR before creating a new release branch."
-          exit 1          
+          exit 1
+
+      - name: Create release branch
+        run: |
+          git checkout -b "${{ steps.bump.outputs.branch }}"
+
+      - name: Push release branch
+        run: |
+          git push --set-upstream origin "${{ steps.bump.outputs.branch }}"          
