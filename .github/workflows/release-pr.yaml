@@ -129,3 +129,19 @@ jobs:
         run: |
           echo "Dry run requested. Stopping before branch creation."
           exit 0
+
+      - name: Check whether release branch already exists
+        id: branch_exists
+        run: |
+          if git ls-remote --exit-code --heads origin "${{ steps.bump.outputs.branch }}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Fail if release branch already exists
+        if: steps.branch_exists.outputs.exists == 'true'
+        run: |
+          echo "Release branch already exists: ${{ steps.bump.outputs.branch }}"
+          echo "Delete it or merge the related PR before creating a new release branch."
+          exit 1          
