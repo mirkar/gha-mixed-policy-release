@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.2.1](https://github.com/mirkar/gha-mixed-policy-release/compare/v1.2.0...v1.2.1) (2026-05-17)
+
+
+### Bug Fixes
+
+* Prepare release PR workflow got all expected IFs --#11 ([241b9dc](https://github.com/mirkar/gha-mixed-policy-release/commit/241b9dc668b5cf393367dcad14f0d03d5e54a8eb))
+
 ## 1.2.0 (2026-05-17)
 
 
