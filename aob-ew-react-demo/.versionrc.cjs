@@ -74,5 +74,6 @@ module.exports = {
       section: 'Reverts'
     }
   ],
-  commitUrlFormat: 'https://github.com/mirkar/github-actions-the-complete-guide/commit/{{hash}}'
+  commitUrlFormat: '{{host}}/{{owner}}/{{repository}}/commit/{{hash}}',
+  issueUrlFormat: ''
 }
