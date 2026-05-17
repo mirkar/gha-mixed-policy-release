@@ -48,6 +48,7 @@ jobs:
 
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+        working-directory: ./${{ vars.PROJECT_DIRECTORY }}
 
       - name: Verify branch version matches merged version
         env:
