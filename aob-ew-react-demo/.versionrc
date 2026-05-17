@@ -60,9 +60,6 @@
             "section": "Reverts"
         }
     ],
-    "scripts": {
-        "postchangelog": "node ./scripts/postchangelog-strip-links.cjs"
-    },
     "releaseCommitMessageFormat": "chore(release): {{currentTag}} [skip ci]",
     "commitUrlFormat": "https://github.com/mirkar/github-actions-the-complete-guide/commit/{{hash}}",
     "linkCompare": false,
