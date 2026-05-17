@@ -1,4 +1,5 @@
 name: Prepare release PR
+run-name: Prepare release PR ${{ inputs.dry_run && '- Preview only' || '' }}
 
 on:
   workflow_dispatch:
