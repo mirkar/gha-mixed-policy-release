@@ -44,7 +44,7 @@ jobs:
           else
             echo "PROJECT_DIRECTORY is set to '${{ vars.PROJECT_DIRECTORY }}'"
           fi
-          echo "${{ github.workspace }}/${{ vars.PROJECT_DIRECTORY }}/package-lock.json
+          echo "${{ github.workspace }}/${{ vars.PROJECT_DIRECTORY }}/package-lock.json"
           ls -la "${{ github.workspace }}/${{ vars.PROJECT_DIRECTORY }}/package-lock.json"
 
       - name: Setup Node
