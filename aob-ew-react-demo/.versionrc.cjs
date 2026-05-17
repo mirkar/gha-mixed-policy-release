@@ -7,9 +7,6 @@ module.exports = {
   writerOpts: {
     reverse: true,
     commitsSort: false,
-    linkReferences: false,
-    linkCompare: false,
-    linkIssueUrlFormat: '',
     // transform: (commit) => {
     //   const cloned = { ...commit }
 
