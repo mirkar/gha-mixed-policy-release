@@ -3,19 +3,19 @@ module.exports = {
     reverse: true,
     commitsSort: false,
     linkReferences: false,
-    transform: (commit) => {
-      const cloned = { ...commit }
+    // transform: (commit) => {
+    //   const cloned = { ...commit }
 
-      if (cloned.subject) {
-        cloned.subject = cloned.subject.replace(/\s+\(#\d+\)$/, '')
-      }
+    //   if (cloned.subject) {
+    //     cloned.subject = cloned.subject.replace(/\s+\(#\d+\)$/, '')
+    //   }
 
-      if (cloned.header) {
-        cloned.header = cloned.header.replace(/\s+\(#\d+\)$/, '')
-      }
+    //   if (cloned.header) {
+    //     cloned.header = cloned.header.replace(/\s+\(#\d+\)$/, '')
+    //   }
 
-      return cloned
-    }
+    //   return cloned
+    // }
   },
   parserOpts: {
     headerPattern: /(?:\(Merged PR \d+: \))?([a-zA-Z]+)(?:\(([\w$.\-*\s]*)\))?\!?:(.*)/,
