@@ -68,3 +68,21 @@ jobs:
           git fetch origin main --tags
           git checkout main
           git reset --hard origin/main
+
+      - name: Fail if another open release PR already exists
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          COUNT=$(gh pr list \
+            --base main \
+            --state open \
+            --label release \
+            --json number \
+            --jq 'length')
+
+          if [ "$COUNT" -gt 0 ]; then
+            echo "There is already an open release PR targeting main."
+            echo "Close or merge the existing release PR before creating a new one."
+            gh pr list --base main --state open --label release
+            exit 1
+          fi
