@@ -86,3 +86,28 @@ jobs:
             gh pr list --base main --state open --label release
             exit 1
           fi
+
+      - name: Run commit-and-tag-version
+        id: bump
+        run: |
+          npm install -g commit-and-tag-version@12.x
+          # npx commit-and-tag-version \
+          #   --release-type ${{ inputs.release_as }} \
+          #   --push false \
+          #   --tag-prefix "" \
+          #   --commit-message "chore(release): %s" \
+          #   --dry-run ${{ inputs.dry_run }}
+          if [ -n "${{ inputs.release_as }}" ]; then
+            npx commit-and-tag-version --release-as "${{ inputs.release_as }}" --skip.tag
+          else
+            npx commit-and-tag-version --skip.tag
+          fi
+
+          VERSION=$(node -p "require('./package.json').version")
+          BRANCH="release/v$VERSION"
+          TITLE="chore(release): v$VERSION"
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+          echo "title=$TITLE" >> "$GITHUB_OUTPUT"
+        working-directory: ./${{ vars.PROJECT_DIRECTORY }}
