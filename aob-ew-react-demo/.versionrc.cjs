@@ -1,6 +1,9 @@
 const { link } = require("node:fs");
 
 module.exports = {
+    scripts: {
+    postchangelog: 'node ./scripts/postchangelog-strip-links.cjs'
+  },
   writerOpts: {
     reverse: true,
     commitsSort: false,
