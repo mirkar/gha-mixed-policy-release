@@ -74,6 +74,4 @@ module.exports = {
       section: 'Reverts'
     }
   ],
-  releaseCommitMessageFormat: 'chore(release): {{currentTag}} [skip ci]',
-  commitUrlFormat: 'https://github.com/mirkar/github-actions-the-complete-guide/commit/{{hash}}'
 }
