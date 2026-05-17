@@ -74,4 +74,5 @@ module.exports = {
       section: 'Reverts'
     }
   ],
+  commitUrlFormat: 'https://github.com/mirkar/github-actions-the-complete-guide/commit/{{hash}}'
 }
