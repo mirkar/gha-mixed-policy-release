@@ -131,6 +131,7 @@ jobs:
           exit 0
 
       - name: Check whether release branch already exists
+        if: ${{ inputs.dry_run == false }}
         id: branch_exists
         run: |
           if git ls-remote --exit-code --heads origin "${{ steps.bump.outputs.branch }}" >/dev/null 2>&1; then
@@ -140,7 +141,7 @@ jobs:
           fi
 
       - name: Fail if release branch already exists
-        if: steps.branch_exists.outputs.exists == 'true'
+        if: ${{ inputs.dry_run == false && steps.branch_exists.outputs.exists == 'true' }}
         run: |
           echo "Release branch already exists: ${{ steps.bump.outputs.branch }}"
           echo "Delete it or merge the related PR before creating a new release branch."
