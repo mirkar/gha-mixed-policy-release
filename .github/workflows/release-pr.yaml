@@ -111,3 +111,9 @@ jobs:
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
           echo "title=$TITLE" >> "$GITHUB_OUTPUT"
         working-directory: ./${{ vars.PROJECT_DIRECTORY }}
+
+      - name: See details
+        run: |
+          echo "Current tags in the repository:"
+          git tag --list
+          cat $GITHUB_WORKSPACE/${{ vars.PROJECT_DIRECTORY }}/CHANGELOG.md
