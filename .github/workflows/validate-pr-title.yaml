@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Regex Check
+        id: regex_check
         uses: actions/github-script@v7
         with:
           script: |
@@ -34,6 +35,7 @@ jobs:
             const bold = '\u001b[1m';
             const reset = '\u001b[0m';          
             const title = context.payload.pull_request.title;
+            core.setOutput('title', title);
             const regex = /^(feat|fix|docs|style|refactor|test|build|chore)(\(.+\))?: .{1,50}/;
             if (!regex.test(title)) {
               core.warning(`${yellow}⚠️ PR title does not follow Conventional Commits format.${reset}`);
@@ -52,5 +54,4 @@ jobs:
       - name: Update PR Title Summary
         if: success()
         run: |
-          const title = context.payload.pull_request.title;
-          echo `### ✅ PR title is valid: "${title}"` >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ PR title is valid: \"${{ steps.regex_check.outputs.title }}\"" >> "$GITHUB_STEP_SUMMARY"
