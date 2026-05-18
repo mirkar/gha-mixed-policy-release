@@ -1,3 +1,4 @@
+# Test if will triggered on changes
 name: Prepare release PR
 run-name: Prepare release PR ${{ inputs.dry_run && '- Preview only' || '' }}
 
