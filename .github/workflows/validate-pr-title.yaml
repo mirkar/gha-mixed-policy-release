@@ -36,9 +36,9 @@ jobs:
             const title = context.payload.pull_request.title;
             const regex = /^(feat|fix|docs|style|refactor|test|build|chore)(\(.+\))?: .{1,50}/;
             if (!regex.test(title)) {
-              core.error(`${red}✖ PR title does not follow Conventional Commits format.${reset}`);
+              core.error(`${red}PR title does not follow Conventional Commits format.${reset}`);
               core.info(`${blue}Expected format:${reset} <type>[(scope)][!]: <description>`);
-              core.info(`${blue}ℹWhere:${reset}`);
+              core.info(`${blue}Where:${reset}`);
               core.info(`${bold}${blue}- type:${reset} feat, fix, docs, style, refactor, test, build, chore`);
               core.info(`${bold}${blue}- scope:${reset} optional, describes the section of the codebase`);
               core.info(`${bold}${blue}- description:${reset} brief summary of the change (max 50 chars)`);
