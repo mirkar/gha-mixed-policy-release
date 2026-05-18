@@ -77,7 +77,7 @@ jobs:
           # The command checks if your current commit (HEAD) has a tag directly attached to it.
           if git describe --tags --exact-match HEAD >/dev/null 2>&1; then
             echo "::error title=No new commits to release::The latest commit in main branch is already tagged as release. Please create a new commit in main branch using PR before running this workflow."
-            exit 1
+            core.setFailed(`No new commits to release core. The latest commit in main branch is already tagged as release. Please create a new commit in main branch using PR before running this workflow core.`);
           fi
 
       - name: Fail if another open release PR already exists
