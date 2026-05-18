@@ -45,4 +45,6 @@ jobs:
               core.info(`${bold}${blue}- !:${reset} optional, indicates a breaking change`);
               core.info(`${bold}${blue}Example:${reset} feat(auth)!: add new login method`);
               core.setFailed(`Invalid PR title: "${title}". Must match Conventional Commits format.`);
+            } else {
+              core.info(`${green}✅ PR title is valid: "${title}"${reset}`);
             }
