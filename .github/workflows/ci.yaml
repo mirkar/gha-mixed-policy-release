@@ -7,6 +7,10 @@ on:
       - 'bugfix/**'
       - 'release/**'
       - 'main'
+  pull_request:
+    types: [opened, reopened, synchronize, edited, labeled, unlabeled]
+    branches:
+      - main      
   workflow_dispatch:
 
 # Global permissions
