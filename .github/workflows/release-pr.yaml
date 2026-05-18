@@ -121,7 +121,7 @@ jobs:
       - name: Show Changelog Diff
         run: |
           echo -e "\033[1;33mGenerated CHANGELOG.md diff:\033[0m"
-          git --no-pager diff --color=always -- ./${{ vars.PROJECT_DIRECTORY }}/CHANGELOG.md || echo "No changes in CHANGELOG.md"
+          git --no-pager diff --color=always HEAD~1 HEAD -- ./${{ vars.PROJECT_DIRECTORY }}/CHANGELOG.md
 
       - name: Show generated changes
         run: |
