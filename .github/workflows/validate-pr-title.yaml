@@ -13,7 +13,7 @@ concurrency:
 on:
   pull_request:
     branches: [ main ]
-    types: [opened, edited, synchronize, reopened]
+    types: [opened, edited, reopened]
 # on:
 #   pull_request:
 #     types: [opened, edited, synchronize]
