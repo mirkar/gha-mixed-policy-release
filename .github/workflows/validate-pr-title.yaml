@@ -29,5 +29,13 @@ jobs:
             const title = context.payload.pull_request.title;
             const regex = /^(feat|fix|docs|style|refactor|test|build|chore)(\(.+\))?: .{1,50}/;
             if (!regex.test(title)) {
+              core.error('PR title does not follow Conventional Commits format.');
+              core.info('Expected format: <type>[(scope)][!]: <description>');
+              core.info('Where:');
+              core.info('- type: feat, fix, docs, style, refactor, test, build, chore');
+              core.info('- scope: optional, describes the section of the codebase');
+              core.info('- description: brief summary of the change (max 50 chars)');
+              core.info('- !: optional, indicates a breaking change');
+              core.info('Example: feat(auth)!: add new login method');
               core.setFailed(`Invalid PR title: "${title}". Must match Conventional Commits format.`);
             }
