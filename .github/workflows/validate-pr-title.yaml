@@ -27,7 +27,7 @@ jobs:
         with:
           script: |
             const title = context.payload.pull_request.title;
-            const regex = /^(feat|fix|docs|style|refactor|test|chore)(\(.+\))?: .{1,50}/;
+            const regex = /^(feat|fix|docs|style|refactor|test|build|chore)(\(.+\))?: .{1,50}/;
             if (!regex.test(title)) {
               core.setFailed(`Invalid PR title: "${title}". Must match Conventional Commits format.`);
             }
