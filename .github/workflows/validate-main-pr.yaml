@@ -2,7 +2,7 @@ name: Validate PRs targeting main
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize, edited, labeled, unlabeled]
+    types: [opened, reopened, synchronize, labeled, unlabeled]
     branches:
       - main
 

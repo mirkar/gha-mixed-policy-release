@@ -13,7 +13,7 @@ concurrency:
 on:
   pull_request:
     branches: [ main ]
-    types: [opened, edited, synchronize, reopened]
+    types: [opened, edited, reopened]
 # on:
 #   pull_request:
 #     types: [opened, edited, synchronize]
@@ -23,11 +23,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Regex Check
+        id: regex_check
         uses: actions/github-script@v7
         with:
           script: |
+            // Define ANSI text styles
+            const red = '\u001b[31m';
+            const green = '\u001b[32m';
+            const yellow = '\u001b[33m';
+            const blue = '\u001b[34m';
+            const bold = '\u001b[1m';
+            const reset = '\u001b[0m';          
             const title = context.payload.pull_request.title;
+            core.setOutput('title', title);
             const regex = /^(feat|fix|docs|style|refactor|test|build|chore)(\(.+\))?: .{1,50}/;
             if (!regex.test(title)) {
+              core.warning(`${yellow}⚠️ PR title does not follow Conventional Commits format.${reset}`);
+              core.info(`${blue}Expected format:${reset} <type>[(scope)][!]: <description>`);
+              core.info(`${blue}Where:${reset}`);
+              core.info(`${bold}${blue}- type:${reset} feat, fix, docs, style, refactor, test, build, chore`);
+              core.info(`${bold}${blue}- scope:${reset} optional, describes the section of the codebase`);
+              core.info(`${bold}${blue}- description:${reset} brief summary of the change (max 50 chars)`);
+              core.info(`${bold}${blue}- !:${reset} optional, indicates a breaking change`);
+              core.info(`${bold}${blue}Example:${reset} feat(auth)!: add new login method`);
               core.setFailed(`Invalid PR title: "${title}". Must match Conventional Commits format.`);
+            } else {
+              core.info(`${green}✅ PR title is valid: "${title}"${reset}`);
             }
+
+      - name: Update PR Title Summary on Success
+        if: success()
+        run: |
+          echo "### ✅ PR title is valid: \"${{ steps.regex_check.outputs.title }}\"" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Update PR Title Summary on Failure
+        if: failure()
+        run: |
+          echo "### ❌ PR title is invalid: \"${{ steps.regex_check.outputs.title }}\"" >> "$GITHUB_STEP_SUMMARY"
+          echo "Please update the PR title to follow the Conventional Commits format." >> "$G
