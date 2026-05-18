@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.0](https://github.com/mirkar/gha-mixed-policy-release/compare/v1.3.0...v1.4.0) (2026-05-18)
+
+
+### Features
+
+* Improver PR title validation outputs for both error and success. Update validation triggers #16 ([dc49484](https://github.com/mirkar/gha-mixed-policy-release/commit/dc49484912aeeab951acf63ee54e60fdb31049c4))
+
+
+### Bug Fixes
+
+* In Prepare release PR - uncommented Fail if another release PR is opened  #18 ([6dffda5](https://github.com/mirkar/gha-mixed-policy-release/commit/6dffda56ee1ff2a0846d0e090e4817f6e868ef3d))
+
+
+### Build System
+
+*  Prepare release PR now uses Job Summary and Confirmation #17 ([f9ba167](https://github.com/mirkar/gha-mixed-policy-release/commit/f9ba167551694f2af5ec9711bf92f001d8c9732d))
+* Added proper  Show Changelog Diff #15 ([a209b4a](https://github.com/mirkar/gha-mixed-policy-release/commit/a209b4a64c02c674f422c65a7b44a25b6f32d40f))
+
 ## [1.3.0](https://github.com/mirkar/gha-mixed-policy-release/compare/v1.2.1...v1.3.0) (2026-05-18)
 
 
