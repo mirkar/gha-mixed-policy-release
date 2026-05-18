@@ -77,7 +77,6 @@ jobs:
           # The command checks if your current commit (HEAD) has a tag directly attached to it.
           if git describe --tags --exact-match HEAD >/dev/null 2>&1; then
             echo "::error title=No new commits to release::The latest commit in main branch is already tagged as release. Please create a new commit in main branch using PR before running this workflow."
-            echo -e "\033[1;31mThe latest commit in main branch is already tagged as release. Please create a new commit in main branch using PR before running this workflow.\033[0m"
             exit 1
           fi
 
@@ -93,7 +92,7 @@ jobs:
             --jq 'length')
 
           if [ "$COUNT" -gt 0 ]; then
-            echo "There is already an open release PR targeting main."
+            echo "::error title=Existing release PR detected::There is already an open release PR targeting main."
             echo "Close or merge the existing release PR before creating a new one."
             gh pr list --base main --state open --label release
             exit 1
@@ -103,12 +102,6 @@ jobs:
         id: bump
         run: |
           npm install -g commit-and-tag-version@12.x
-          # npx commit-and-tag-version \
-          #   --release-type ${{ inputs.release_as }} \
-          #   --push false \
-          #   --tag-prefix "" \
-          #   --commit-message "chore(release): %s" \
-          #   --dry-run ${{ inputs.dry_run }}
           if [ -n "${{ inputs.release_as }}" ]; then
             npx commit-and-tag-version --release-as "${{ inputs.release_as }}" --skip.tag
           else
@@ -124,17 +117,19 @@ jobs:
           echo "title=$TITLE" >> "$GITHUB_OUTPUT"
         working-directory: ./${{ vars.PROJECT_DIRECTORY }}
 
-      - name: Show Changelog
+
+      - name: Show Changelog Diff
         run: |
-          echo "Current tags in the repository:"
-          git tag --list
-          cat $GITHUB_WORKSPACE/${{ vars.PROJECT_DIRECTORY }}/CHANGELOG.md
+          echo -e "\033[1;33mGenerated CHANGELOG.md diff:\033[0m"
+          git --no-pager diff --color=always -- ./${{ vars.PROJECT_DIRECTORY }}/CHANGELOG.md || echo "No changes in CHANGELOG.md"
 
       - name: Show generated changes
         run: |
           echo "Prepared version: v${{ steps.bump.outputs.version }}"
           git status --short
           git --no-pager log --oneline -1
+          echo -e "\033[1;33mCHANGELOG.md content:\033[0m"
+          cat $GITHUB_WORKSPACE/${{ vars.PROJECT_DIRECTORY }}/CHANGELOG.md
 
       - name: Stop after preview
         if: ${{ inputs.dry_run == true }}
