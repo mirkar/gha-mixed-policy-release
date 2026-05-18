@@ -70,15 +70,15 @@ jobs:
           git checkout main
           git reset --hard origin/main
 
-      # - name: Fail if latest commit is already tagged
-      #   run: |
-      #     # This check prevents creating a release PR when the latest commit on main is already tagged as release, 
-      #     # which means that there is no new commit in main branch to release.
-      #     # The command checks if your current commit (HEAD) has a tag directly attached to it.
-      #     if git describe --tags --exact-match HEAD >/dev/null 2>&1; then
-      #       echo "::error title=No new commits to release::The latest commit in main branch is already tagged as release. Please create a new commit in main branch using PR before running this workflow."
-      #       exit 1
-      #     fi
+      - name: Fail if latest commit is already tagged
+        run: |
+          # This check prevents creating a release PR when the latest commit on main is already tagged as release, 
+          # which means that there is no new commit in main branch to release.
+          # The command checks if your current commit (HEAD) has a tag directly attached to it.
+          if git describe --tags --exact-match HEAD >/dev/null 2>&1; then
+            echo "::error title=No new commits to release::The latest commit in main branch is already tagged as release. Please create a new commit in main branch using PR before running this workflow."
+            exit 1
+          fi
 
       - name: Fail if another open release PR already exists
         env:
@@ -155,15 +155,15 @@ jobs:
           echo "Dry run requested. Stopping before branch creation."
           exit 0
 
-      - name: Ask for confirmation if not a dry run
-        if: ${{ inputs.dry_run == false }}
-        env:
-          CONFIRMATION: ${{ github.event.inputs.confirmation }}
-        run: |
-          if [ "$CONFIRMATION" != "yes" ]; then
-            echo "Confirmation not received. To proceed, re-run this workflow and provide 'yes' as the confirmation input."
-            exit 1
-          fi
+      # - name: Ask for confirmation if not a dry run
+      #   if: ${{ inputs.dry_run == false }}
+      #   env:
+      #     CONFIRMATION: ${{ github.event.inputs.confirmation }}
+      #   run: |
+      #     if [ "$CONFIRMATION" != "yes" ]; then
+      #       echo "Confirmation not received. To proceed, re-run this workflow and provide 'yes' as the confirmation input."
+      #       exit 1
+      #     fi
 
       - name: Check whether release branch already exists
         if: ${{ inputs.dry_run == false }}
