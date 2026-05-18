@@ -47,4 +47,5 @@ jobs:
               core.setFailed(`Invalid PR title: "${title}". Must match Conventional Commits format.`);
             } else {
               core.info(`${green}✅ PR title is valid: "${title}"${reset}`);
+              echo '### ✅ PR title is valid: "${title}"' >> $GITHUB_STEP_SUMMARY
             }
