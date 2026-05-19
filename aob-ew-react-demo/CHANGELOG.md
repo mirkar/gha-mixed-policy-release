@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.2](https://github.com/mirkar/gha-mixed-policy-release/compare/v1.4.1...v1.4.2) (2026-05-19)
+
+
+### Refactors
+
+* Trying whithout github.event.before #23 ([12595fa](https://github.com/mirkar/gha-mixed-policy-release/commit/12595fadf13aec4bb6ee5b65a2fbf4ed53b836f6))
+* commented out the very first push condition ([0a37f98](https://github.com/mirkar/gha-mixed-policy-release/commit/0a37f9832688ddc1a82b1e76aa3b1948f5ac3892))
+
 ## [1.4.1](https://github.com/mirkar/gha-mixed-policy-release/compare/v1.4.0...v1.4.1) (2026-05-18)
 
 
