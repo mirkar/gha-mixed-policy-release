@@ -1,4 +1,4 @@
-# Just to investigte trigerring
+# Trying whithout github.event.before 
 name: CI Pipeline
 on:
   push:
